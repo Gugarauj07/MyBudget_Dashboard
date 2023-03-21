@@ -7,6 +7,8 @@ class Receita:
         self.categoria = categoria
         self.data = data
         self.nome = nome
+
+        self.addReceita()
         
     def addReceita(self):
         cursor.execute(f"SELECT id FROM categoria WHERE nome = '{self.categoria}'")
@@ -22,6 +24,7 @@ class Receita:
         cursor.execute("SELECT * FROM receita")
         print(cursor.fetchall())
 
-a = Receita("Salário", 1600, 1, "vendas", "24/01/2004")
-a.addReceita()
-a.listarReceitas()
+a = Receita("Pica de borracha", 1600, 0, "vendas", "24/01/2004")
+a = Receita("Pica de pedra", 1600, 0, "vendas", "31/01/2004")
+a = Receita("Picanha", 1600, 0, "vendas", "23/01/2004")
+a = Receita("Bolsa familia", 1600, 0, "vendas", "13/01/2004")

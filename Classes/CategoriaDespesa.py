@@ -6,7 +6,10 @@ class CategoriaDespesa(Categoria):
         self.limite = limite
         self.prioridade = prioridade
 
+        self.addCategoriaDespesa()
+
     def addCategoriaDespesa(self):
-        cursor.execute(f'INSERT INTO categoria (nome, descricao, tipo, limite) VALUES("{self.nome}", "{self.descricao}", "despesa", "{self.limite}", "{self.prioridade}")')
+        cursor.execute(f'INSERT INTO categoria (nome, descricao, tipo, limite, prioridade) VALUES("{self.nome}", "{self.descricao}", "despesa", "{self.limite}", "{self.prioridade}")')
         conn.commit()
 
+cat1 = CategoriaDespesa(2000, "alta", "comida", "coisa pra comer")

@@ -9,6 +9,7 @@ class Investimentos:
         self.data = data
         self.nome = nome
         self.descricao = descricao
+        self.addInvestimentos()
         
     def addInvestimentos(self):
         cursor.execute(f"SELECT id FROM categoria WHERE nome = '{self.categoria}'")

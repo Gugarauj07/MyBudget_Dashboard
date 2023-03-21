@@ -21,3 +21,9 @@ class Categoria:
         cursor.execute("SELECT * FROM categoria")
         print(cursor.fetchall())
 
+Cat1 = Categoria("vendas", "porra")
+Cat1.addCategoriaReceita()
+Cat2 = Categoria("salário", "mensal")
+Cat2.addCategoriaReceita()
+Cat3 = Categoria("Renda fixa", "Tipo de investimento onde a renda é fixa")
+Cat3.addCategoriaInvestimento()

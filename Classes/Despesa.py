@@ -1,12 +1,14 @@
 from connect.connectBD import conn, cursor
 
 class Despesa:
-    def __init__(self,nome, periodicidade, valor, tipoDespesa, data, categoria):
+    def __init__(self,nome, periodicidade, valor, categoria, data):
         self.periodicidade = periodicidade
         self.valor = valor
         self.categoria = categoria
         self.data = data
         self.nome = nome
+
+        self.addDespesa()
 
 
     def addDespesa(self):
@@ -22,3 +24,8 @@ class Despesa:
     def listarDespesas(self):
         cursor.execute("SELECT * FROM despesa")
         print(cursor.fetchall())    
+
+a = Despesa("Pica de borracha", 1600, 0, "comida", "24/01/2004")
+a = Despesa("Pica de pedra", 1600, 0, "comida", "31/01/2004")
+a = Despesa("Picanha", 1600, 0, "comida", "23/01/2004")
+a = Despesa("Bolsa familia", 1600, 0, "comida", "13/01/2004")

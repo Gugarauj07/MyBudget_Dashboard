@@ -7,6 +7,8 @@ class Usuario:
         self.senha = senha
         self.id = None
 
+        self.registrarUsuário()
+
     def loginUsuário(self):
         cursor.execute("SELECT login FROM usuario")
         listaLogin = [list[0] for list in cursor.fetchall()]
@@ -38,7 +40,11 @@ class Usuario:
         cursor.execute("SELECT * FROM usuario")
         print(cursor.fetchall())
 
+ana = Usuario("GUsatvo", "gugaraujo01@gmail.com", "aklsdla")
 Gu = Usuario("Ana", "gugara123@gmail.com", "aklsdla")
-Gu.registrarUsuário()
-Gu.loginUsuário()
-print(Gu.id)
+Rafa = Usuario("Rafa", "asabsd23@gmail.com", "aklsdla")
+PIca = Usuario("PIca", "PIca@gmail.com", "aklsdla")
+nasd = Usuario("nasd", "asvd@gmail.com", "aklsdla")
+gfadsa = Usuario("gfadsa", "dasdas@gmail.com", "aklsdla")
+naboi = Usuario("naboi", "naboi@gmail.com", "aklsdla")
+
