@@ -1,7 +1,8 @@
 from flask import Blueprint, request, jsonify
 import sys
-sys.path.append(r'C:\Work\myBudgetDashboard\backend\models')
-from userModel import User, db
+sys.path.append(r'C:\Work\myBudgetDashboard\backend')
+from models import User
+from db import db
 
 user_controller_bp = Blueprint('user_controller', __name__, url_prefix='/users')
 
@@ -9,7 +10,6 @@ user_controller_bp = Blueprint('user_controller', __name__, url_prefix='/users')
 def get_users():
     users = User.query.all()
     return jsonify({'users': [user.serialize() for user in users]}), 200
-
 
 @user_controller_bp.route('/', methods=['POST'])
 def create_user():

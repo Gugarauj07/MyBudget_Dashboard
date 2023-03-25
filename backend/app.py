@@ -1,39 +1,35 @@
 from flask import Flask, jsonify, request
-import datetime
-from flask_sqlalchemy import SQLAlchemy
-from config import app_config
+import models
+from db import db
+from flask_smorest import Api
 
-config = app_config['development']
-
-def create_app(config_name):
+def create_app():
+		
 	app = Flask(__name__, template_folder='templates')
-	app.secret_key = config.SECRET
-	app.config.from_object(app_config['development'])
-	app.config.from_pyfile('config.py')
 	app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 	app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-	db = SQLAlchemy(app)
 	db.init_app(app)
+
+	# api = Api(app)
+
+	with app.app_context():
+		db.create_all()
+
+	from controllers.userController import user_controller_bp
+	from controllers.categoriaController import categoria_controller_bp
+	from controllers.despesaController import despesa_controller_bp
+	app.register_blueprint(user_controller_bp)
+	app.register_blueprint(categoria_controller_bp)
+	app.register_blueprint(despesa_controller_bp)
 
 	@app.route('/')
 	def index():
 		return 'Hello World'
-	
-	from controllers.userController import user_controller_bp
-	app.register_blueprint(user_controller_bp)
 
 	return app
 
-# x = datetime.datetime.now()
-
-# app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = SQLAlchemy(app)
 
 
-# from controllers.userController import user_controller_bp
-# app.register_blueprint(user_controller_bp)
-
-# if __name__ == '__main__':
-# 	app.run(debug=True)
+if __name__ == '__main__':
+	app = create_app()
+	app.run(debug=True)

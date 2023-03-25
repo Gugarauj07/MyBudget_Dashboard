@@ -1,11 +1,7 @@
-from flask_sqlalchemy import SQLAlchemy
-from config import app_config
-
-config = app_config['development']
-db = SQLAlchemy(config.APP)
+from db import db
 
 class User(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'Users'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
