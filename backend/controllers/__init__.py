@@ -1,0 +1,6 @@
+from controllers.userController import user_controller_bp
+from controllers.categoriaController import categoria_controller_bp
+from controllers.despesaController import despesa_controller_bp
+from controllers.receitaController import receita_controller_bp
+from controllers.metaController import meta_controller_bp
+from controllers.investimentoController import investimentos_controller_bp
