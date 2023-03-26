@@ -9,7 +9,7 @@ categoria_controller_bp = Blueprint('categoria_controller', __name__, url_prefix
 @categoria_controller_bp.route('/', methods=['GET'])
 def get_categorias():
     categorias = Categorias.query.all()
-    return jsonify({'categoria': [categoria.serialize() for categoria in categorias]}), 200
+    return jsonify([categoria.to_dict() for categoria in categorias]), 200
 
 @categoria_controller_bp.route('/', methods=['POST'])
 def create_categoria():
@@ -17,13 +17,13 @@ def create_categoria():
     categoria = Categorias(name=data['name'], descricao=data['descricao'], tipo=data['tipo'])
     db.session.add(categoria)
     db.session.commit()
-    return jsonify(categoria.serialize()), 201
+    return jsonify(categoria.to_dict()), 201
 
 @categoria_controller_bp.route('/<int:categoria_id>', methods=['GET'])
 def get_categoria(categoria_id):
     categoria = Categorias.query.get(categoria_id)
     if categoria:
-        return jsonify(categoria.serialize()), 200
+        return jsonify(categoria.to_dict()), 200
     else:
         return jsonify({'error': 'Categorias not found'}), 404
 

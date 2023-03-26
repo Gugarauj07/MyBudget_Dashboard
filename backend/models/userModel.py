@@ -1,7 +1,9 @@
 from db import db
+from sqlalchemy_serializer import SerializerMixin
 
-class User(db.Model):
-    __tablename__ = 'Users'
+
+class User(db.Model, SerializerMixin):
+    __tablename__ = 'User'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -13,9 +15,3 @@ class User(db.Model):
         self.email = email
         self.password = password
     
-    def serialize(self):
-        return {
-            'id': self.id,
-            'name': self.name,
-            'email': self.email
-        }

@@ -1,7 +1,8 @@
 from db import db
+from sqlalchemy_serializer import SerializerMixin
 
-class Categorias(db.Model):
-    __tablename__ = 'Categorias'
+class Categorias(db.Model, SerializerMixin):
+    __tablename__ = 'Categoria'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -9,9 +10,9 @@ class Categorias(db.Model):
     limite = db.Column(db.Integer)
     prioridade = db.Column(db.String(50))
     tipo = db.Column(db.String(50))
-    despesas = db.relationship('Despesas', backref='Categorias')
-    receitas = db.relationship('Receitas', backref='Receitas')
-    investimentos = db.relationship('Investimentos', backref='Receitas')
+    # despesas = db.relationship('Despesa', backref='Categoria')
+    # receitas = db.relationship('Receita', backref='Categoria')
+    # investimentos = db.relationship('Investimento', backref='Categoria')
 
     def __init__(self, name, descricao,tipo, limite=None, prioridade=None):
         self.name = name
@@ -19,12 +20,3 @@ class Categorias(db.Model):
         self.limite = limite
         self.prioridade = prioridade
         self.tipo = tipo
-    
-    def serialize(self):
-        return {
-            'name': self.name,
-            'descricao': self.descricao,
-            'limite': self.limite,
-            'prioridade': self.prioridade,
-            'tipo': self.tipo
-        }

@@ -12,7 +12,12 @@ def create_app():
 	with app.app_context():
 		db.create_all()
 
-	import controllers
+	from controllers.userController import user_controller_bp
+	from controllers.categoriaController import categoria_controller_bp
+	from controllers.despesaController import despesa_controller_bp
+	from controllers.receitaController import receita_controller_bp
+	from controllers.metaController import meta_controller_bp
+	from controllers.investimentoController import investimento_controller_bp
 
 	app.register_blueprint(user_controller_bp)
 	app.register_blueprint(categoria_controller_bp)

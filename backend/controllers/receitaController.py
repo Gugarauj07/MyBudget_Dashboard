@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import sys
 sys.path.append(r'C:\Work\myBudgetDashboard\backend')
-from models import Receitas
+from models import Receitas, Categorias
 from db import db
 
 receita_controller_bp = Blueprint('receita_controller', __name__, url_prefix='/receita')
@@ -9,27 +9,28 @@ receita_controller_bp = Blueprint('receita_controller', __name__, url_prefix='/r
 @receita_controller_bp.route('/', methods=['GET'])
 def get_receitas():
     receitas = Receitas.query.all()
-    return jsonify({'receitas': [receita.serialize() for receita in receitas]}), 200
+    return jsonify({'receitas': [receita.to_dict() for receita in receitas]}), 200
 
 @receita_controller_bp.route('/', methods=['POST'])
 def create_receitas():
     data = request.get_json()
-    receita = Receitas(name=data['name'], descricao=data['descricao'], valor=data['valor'], categoria=data['categoria'])
+    categoria_id = db.session.query(Categorias).filter_by(name=f"{data['categoria']}").first().id
+    receita = Receitas(name=data['name'], descricao=data['descricao'], valor=data['valor'], categoria_id=categoria_id)
     db.session.add(receita)
     db.session.commit()
-    return jsonify(receita.serialize()), 201
+    return jsonify(receita.to_dict()), 201
 
 @receita_controller_bp.route('/<int:receitas_id>', methods=['GET'])
-def get_receitas(receitas_id):
+def get_receita(receitas_id):
     receita = Receitas.query.get(receitas_id)
     if receita:
-        return jsonify(receita.serialize()), 200
+        return jsonify(receita.to_dict()), 200
     else:
         return jsonify({'error': 'Receitas not found'}), 404
 
 
 @receita_controller_bp.route('/<int:receitas_id>', methods=['DELETE'])
-def delete_receitas(receitas_id):
+def delete_receita(receitas_id):
     receita = Receitas.query.get(receitas_id)
     if not receita:
         return jsonify({'error': 'Receitas not found'}), 404

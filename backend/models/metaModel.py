@@ -1,9 +1,10 @@
 from db import db
 from sqlalchemy.sql import func
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Metas(db.Model):
-    __tablename__ = 'Metas'
+class Metas(db.Model, SerializerMixin):
+    __tablename__ = 'Meta'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
@@ -17,11 +18,3 @@ class Metas(db.Model):
         self.descricao = descricao
         self.dataInicial = dataInicial
         self.dataFinal = dataFinal
-
-    def serialize(self):
-        return {
-            'name': self.name,
-            'descricao': self.descricao,
-            'dataFinal': self.dataFinal,
-            'valorEstimado': self.valorEstimado
-        }

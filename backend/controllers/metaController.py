@@ -20,7 +20,7 @@ def create_metas():
     return jsonify(meta.serialize()), 201
 
 @meta_controller_bp.route('/<int:metas_id>', methods=['GET'])
-def get_metas(metas_id):
+def get_meta(metas_id):
     meta = Metas.query.get(metas_id)
     if meta:
         return jsonify(meta.serialize()), 200
@@ -29,7 +29,7 @@ def get_metas(metas_id):
 
 
 @meta_controller_bp.route('/<int:metas_id>', methods=['DELETE'])
-def delete_metas(metas_id):
+def delete_meta(metas_id):
     meta = Metas.query.get(metas_id)
     if not meta:
         return jsonify({'error': 'Metas not found'}), 404
