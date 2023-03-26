@@ -1,7 +1,8 @@
 from db import db
 from sqlalchemy.sql import func
+from dataclasses import dataclass
 
-
+@dataclass
 class Despesas(db.Model):
     __tablename__ = 'Despesas'
 
@@ -16,11 +17,3 @@ class Despesas(db.Model):
         self.name = name
         self.valor = valor
         self.categoria = categoria
-
-    def serialize(self):
-        return {
-            'name': self.name,
-            'descricao': self.descricao,
-            'valor': self.valor,
-            'categoria': self.categoria
-        }

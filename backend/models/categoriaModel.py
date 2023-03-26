@@ -10,8 +10,8 @@ class Categorias(db.Model):
     prioridade = db.Column(db.String(50))
     tipo = db.Column(db.String(50))
     despesas = db.relationship('Despesas', backref='Categorias')
-    despesas = db.relationship('Receitas', backref='Categorias')
-    despesas = db.relationship('Investimentos', backref='Categorias')
+    receitas = db.relationship('Receitas', backref='Receitas')
+    investimentos = db.relationship('Investimentos', backref='Receitas')
 
     def __init__(self, name, descricao,tipo, limite=None, prioridade=None):
         self.name = name

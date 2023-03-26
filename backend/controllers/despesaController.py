@@ -9,15 +9,15 @@ despesa_controller_bp = Blueprint('despesa_controller', __name__, url_prefix='/d
 @despesa_controller_bp.route('/', methods=['GET'])
 def get_despesas():
     despesas = Despesas.query.all()
-    return jsonify({'despesa': [despesa.serialize() for despesa in despesas]}), 200
+    return jsonify(despesas), 200
 
 @despesa_controller_bp.route('/', methods=['POST'])
 def create_despesa():
     data = request.get_json()
-    despesa = Despesas(name=data['name'], descricao=data['descricao'], valor=data['valor'], categoria=data['categoria'])
-    db.session.add(despesa)
+    data['name'] = Despesas(name=data['name'], valor=data['valor'], categoria=data['categoria'])
+    db.session.add(data['name'])
     db.session.commit()
-    return jsonify(despesa.serialize()), 201
+    return jsonify(data['name'].serialize()), 201
 
 @despesa_controller_bp.route('/<int:despesa_id>', methods=['GET'])
 def get_despesa(despesa_id):
