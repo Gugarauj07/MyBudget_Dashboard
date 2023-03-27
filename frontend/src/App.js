@@ -1,45 +1,32 @@
 // Importing modules
 import React, { useState, useEffect } from "react";
-import "./App.css";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import styles from "./App.css";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import About from "./pages/About/About";
+import Home from "./pages/Home/Home";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
-	// usestate for setting a javascript
-	// object for storing and using data
-	const [data, setdata] = useState({
-		name: "",
-		age: 0,
-		date: "",
-		programming: "",
-	});
-
-	// Using useEffect for single rendering
-	useEffect(() => {
-		// Using fetch to fetch the api from
-		// flask server it will be redirected to proxy
-		fetch("/data").then((res) =>
-			res.json().then((data) => {
-				// Setting a data from api
-				setdata({
-					name: data.Name,
-					age: data.Age,
-					date: data.Date,
-					programming: data.programming,
-				});
-			})
-		);
-	}, []);
-
 	return (
 		<div className="App">
-			<header className="App-header">
-				<h1>React and flask</h1>
-				{/* Calling a data from setdata for showing */}
-				<p>{data.name}</p>
-				<p>{data.age}</p>
-				<p>{data.date}</p>
-				<p>{data.programming}</p>
-
-			</header>
+			<BrowserRouter>
+			<Navbar/>
+				<div className="container">
+					<Routes>
+						<Route path="/" element={ <Home /> } />
+						<Route path="/about" element={ <About /> } />
+						<Route path="/login" element={ <Login /> } />
+						<Route path="/register" element={ <Register /> } />
+						<Route path="/dashboard" element={ <Dashboard /> } />
+					</Routes>
+				</div>
+			<Footer />
+			</BrowserRouter>
+		
 		</div>
 	);
 }
