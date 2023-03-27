@@ -9,7 +9,7 @@ user_controller_bp = Blueprint('user_controller', __name__, url_prefix='/users')
 @user_controller_bp.route('/', methods=['GET'])
 def get_users():
     users = User.query.all()
-    return jsonify({'users': [user.serialize() for user in users]}), 200
+    return jsonify([user.to_dict() for user in users]), 200
 
 @user_controller_bp.route('/', methods=['POST'])
 def create_user():
@@ -17,14 +17,14 @@ def create_user():
     user = User(name=data['name'], email=data['email'], password=data['password'])
     db.session.add(user)
     db.session.commit()
-    return jsonify(user.serialize()), 201
+    return jsonify(user.to_dict()), 201
 
 
-@user_controller_bp.route('/<int:user_id>', methods=['GET'])
-def get_user(user_id):
-    user = User.query.get(user_id)
+@user_controller_bp.route('/<string:user_email>', methods=['GET'])
+def get_user(user_email):
+    user = db.session.query(User).filter_by(email=user_email).first()
     if user:
-        return jsonify(user.serialize()), 200
+        return jsonify(user.to_dict()), 200
     else:
         return jsonify({'error': 'User not found'}), 404
 
@@ -39,7 +39,7 @@ def update_user(user_id):
     user.username = data.get('username', user.username)
     user.email = data.get('email', user.email)
     db.session.commit()
-    return jsonify(user.serialize()), 200
+    return jsonify(user.to_dict()), 200
 
 
 @user_controller_bp.route('/<int:user_id>', methods=['DELETE'])
