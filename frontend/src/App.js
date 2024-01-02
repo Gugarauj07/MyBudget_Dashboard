@@ -1,34 +1,60 @@
-// Importing modules
-import React, { useState, useEffect } from "react";
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import styles from "./App.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import About from "./pages/About/About";
-import Home from "./pages/Home/Home";
-import Register from "./pages/Register/Register";
-import Login from "./pages/Login/Login";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import React, {useState, useMemo} from 'react'
+import styled from "styled-components";
+import {MainLayout} from './styles/Layouts'
+import Navigation from './Components/Navigation/Navigation'
+import Dashboard from './Components/Dashboard/Dashboard';
+import Income from './Components/Income/Income'
+import Expenses from './Components/Expenses/Expenses';
+import { useGlobalContext } from './context/globalContext';
 
 function App() {
-	return (
-		<div className="App">
-			<BrowserRouter>
-			<Navbar/>
-				<div className="container">
-					<Routes>
-						<Route path="/" element={ <Home /> } />
-						<Route path="/about" element={ <About /> } />
-						<Route path="/login" element={ <Login /> } />
-						<Route path="/register" element={ <Register /> } />
-						<Route path="/dashboard" element={ <Dashboard /> } />
-					</Routes>
-				</div>
-			<Footer />
-			</BrowserRouter>
-		
-		</div>
-	);
+  const [active, setActive] = useState(1)
+
+  const global = useGlobalContext()
+  console.log(global);
+
+  const displayData = () => {
+    switch(active){
+      case 1:
+        return <Dashboard />
+      case 2:
+        return <Dashboard />
+      case 3:
+        return <Income />
+      case 4: 
+        return <Expenses />
+      default: 
+        return <Dashboard />
+    }
+  }
+
+  return (
+    <AppStyled className="App">
+      <MainLayout>
+        <Navigation active={active} setActive={setActive} />
+        <main>
+          {displayData()}
+        </main>
+      </MainLayout>
+    </AppStyled>
+  );
 }
+
+const AppStyled = styled.div`
+  height: 100vh;
+  background-color: #fff;
+  position: relative;
+  main{
+    flex: 1;
+    background: rgba(252, 246, 249, 0.78);
+    border: 3px solid #FFFFFF;
+    backdrop-filter: blur(4.5px);
+    border-radius: 32px;
+    overflow-x: hidden;
+    &::-webkit-scrollbar{
+      width: 0;
+    }
+  }
+`;
 
 export default App;
